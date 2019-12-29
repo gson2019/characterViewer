@@ -1,5 +1,6 @@
 package com.example.characterviewer.view
 
+import App
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,8 @@ import com.example.characterviewer.BuildConfig
 import com.example.characterviewer.R
 import com.example.characterviewer.api.CharacterApi
 import com.example.characterviewer.api.CharacterInterceptor
+import com.example.characterviewer.di.component.CharacterListComponent
+import com.example.characterviewer.di.component.DaggerCharacterListComponent
 import com.example.characterviewer.viewmodel.CharactersViewModel
 import com.example.characterviewer.viewmodel.DataRepository
 import com.google.android.material.tabs.TabLayout
@@ -22,9 +25,12 @@ import kotlinx.android.synthetic.main.fragment_characterlist.*
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 class CharacterListFragment : Fragment(), TabLayout.OnTabSelectedListener {
-    private lateinit var charactersViewModel: CharactersViewModel
+
+    @Inject
+    lateinit var charactersViewModel: CharactersViewModel
     private lateinit var charactersAdapter: CharactersAdapter
     private lateinit var mContext: Context
     override fun onTabReselected(p0: TabLayout.Tab?) {
@@ -64,7 +70,7 @@ class CharacterListFragment : Fragment(), TabLayout.OnTabSelectedListener {
             OkHttpClient.Builder().addInterceptor(CharacterInterceptor()).build()
         val retrofit: Retrofit = Retrofit.Builder()
             .client(okHttpClient)
-            .baseUrl("http://api.duckduckgo.com/?q=simpsons+characters&format=json")
+            .baseUrl("http://api.duckduckgo.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val characterApi: CharacterApi = retrofit.create(CharacterApi::class.java)
@@ -90,6 +96,13 @@ class CharacterListFragment : Fragment(), TabLayout.OnTabSelectedListener {
             }
         })
     }
+
+    private fun getComponent(context: Context?): CharacterListComponent {
+        return DaggerCharacterListComponent.builder()
+            .appComponent(((context?.applicationContext) as App).getAppComponent())
+            .build()
+    }
+
 
     companion object {
         fun newInstance(): CharacterListFragment {

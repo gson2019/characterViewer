@@ -18,7 +18,7 @@ class CharactersViewModel(repository: DataRepository):ViewModel(){
     fun getRemoteCharacters():Unit{
         viewModelScope.launch(Dispatchers.IO) {
             Log.d("MyTag", "IO Dispatchers launched")
-            val characterResponse = dataRepository.getRemoteCharacters("");
+            val characterResponse = dataRepository.getRemoteCharacters("simpsons+characters", "json");
             Log.d("MyTag", characterResponse.characterInfos.size.toString())
             val characterList = characterResponse.characterInfos
             withContext(Dispatchers.Main) {
