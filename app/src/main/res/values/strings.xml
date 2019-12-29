@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">characterViewer</string>
+    <string name="tab_simpson">simpson</string>
+    <string name="tab_favorite">Favorite</string>
+</resources>

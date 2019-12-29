@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/item_character"
+        android:icon="@drawable/simpson_24dp"
+        android:title="@string/tab_simpson" />
+
+    <item
+        android:id="@+id/item_favorite"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:title="@string/tab_favorite" />
+</menu>
